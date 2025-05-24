@@ -21,7 +21,7 @@
       color: #f0f0f0;
       line-height: 1.6;
       scroll-behavior: smooth;
-      padding-top: 80px; /* untuk memberi ruang pada header tetap */
+      padding-top: 80px;
     }
 
     header {
@@ -34,6 +34,11 @@
       width: 100%;
       top: 0;
       z-index: 1000;
+      transition: transform 0.3s ease;
+    }
+
+    header.hide {
+      transform: translateY(-100%);
     }
 
     header h1 {
@@ -161,7 +166,7 @@
   </style>
 </head>
 <body>
-  <header data-aos="zoom-in">
+  <header id="navbar" data-aos="zoom-in">
     <h1>Farih Ahbab</h1>
     <nav>
       <a href="#about">Tentang</a>
@@ -225,10 +230,29 @@
   <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
   <script>
     AOS.init();
+
     function sendMessage() {
       alert("Pesan berhasil dikirim! Terima kasih telah menghubungi saya.");
       return false;
     }
+
+    // Scroll direction detection for navbar
+    let lastScrollTop = 0;
+    const navbar = document.getElementById("navbar");
+
+    window.addEventListener("scroll", function () {
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+      if (scrollTop > lastScrollTop) {
+        // Scroll down
+        navbar.classList.add("hide");
+      } else {
+        // Scroll up
+        navbar.classList.remove("hide");
+      }
+
+      lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+    }, false);
   </script>
 </body>
 </html>
